@@ -1,35 +1,37 @@
 package service
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/wonderivan/logger"
 	"goWeb/dataAccess"
 	"goWeb/model"
-	"goWeb/tools"
 )
 
 type UserLoginService struct {
 }
 
-var userLogin model.UserLogin
-
-func (userLoginService *UserLoginService) UserLoginService(context *gin.Context) (int64, error) {
-	userLogin.Id = tools.GetUserId()
+func (userLoginService *UserLoginService) UserLoginService(context *gin.Context) error {
+	var userLogin model.UserLogin
 	err := context.BindJSON(&userLogin)
 	if err != nil {
-		logger.Error("userLogin BindJson 失败", err)
-		return 0, err
+		logger.Error("用户数据格式不匹配", err)
+		return err
 	}
-	//将用户注册数据插入数据库表user_login同时会在user_info表中将新建一条数据把id置为用户注册时的id号,以此关联二者
-	userInfo := model.UserInfo{
-		Id:       userLogin.Id,
-		UserName: "",
-		UserBio:  "",
+	userLoginCopy := userLogin
+	userLoginDao := dataAccess.UserLoginDao{}
+	_, err = userLoginDao.GetUserLogin(&userLoginCopy)
+	if err != nil {
+		logger.Error("查询数据库表失败", err)
 	}
-	userDao := dataAccess.UserDao{}
-	_, _ = userDao.SetUserInfoId(&userInfo)
-	return userDao.SetUserLogin(&userLogin)
-}
-func GetUserLoginService() model.UserLogin {
-	return userLogin
+	if userLogin.UserAccount != userLoginCopy.UserAccount {
+		return errors.New("输入用户账号不存在")
+	} else if userLogin.UserAccount == userLoginCopy.UserAccount && userLogin.UserPassWord != userLoginCopy.UserPassWord {
+		return errors.New("用户输入密码有误")
+	}
+	//将userLogin变为userRegister  就可以对userInfo操作
+	userRegister.Id = userLoginCopy.Id
+	userRegister.UserAccount = userLoginCopy.UserAccount
+	userRegister.UserPassWord = userLoginCopy.UserPassWord
+	return nil
 }

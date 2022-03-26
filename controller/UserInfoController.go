@@ -30,8 +30,8 @@ func (userInfoController *UserInfoController) userInfoPost(context *gin.Context)
 func (userInfoController *UserInfoController) userInfoGet(context *gin.Context) {
 	var userInfo model.UserInfo
 	var userInfoService service.UserInfoService
-	userLogin := service.GetUserLoginService()
-	result, err := userInfoService.UserInfoServiceGet(userLogin.Id, &userInfo)
+	userRegister := service.GetUserRegisterService()
+	result, err := userInfoService.UserInfoServiceGet(userRegister.Id, &userInfo)
 	if err != nil || result == false {
 		logger.Error("获取数据失败", err)
 	} else {
@@ -42,9 +42,9 @@ func (userInfoController *UserInfoController) userInfoGet(context *gin.Context) 
 //中间件
 func whetherActivateUserInfoMiddleWare() gin.HandlerFunc {
 	return func(context *gin.Context) {
-		userLogin := service.GetUserLoginService()
+		userRegister := service.GetUserRegisterService()
 		//多写一点，严谨一点
-		if userLogin.Id == 0 && userLogin.UserAccount == "" && userLogin.UserPassWord == "" {
+		if userRegister.Id == 0 && userRegister.UserAccount == "" && userRegister.UserPassWord == "" {
 			context.JSON(http.StatusOK, gin.H{
 				"message": "请先登入才可以访问哦",
 			})

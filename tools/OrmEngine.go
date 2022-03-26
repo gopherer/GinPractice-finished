@@ -22,7 +22,7 @@ func OrmEngine(cfg *Config) (*Orm, error) {
 		return nil, err
 	}
 	engine.ShowSQL(database.ShowSql)
-	err = engine.Sync2(new(model.UserInfo), new(model.UserLogin))
+	err = engine.Sync2(new(model.UserInfo), new(model.UserRegister))
 	if err != nil {
 		logger.Error("结构体映射数据表失败", err)
 		return nil, err
@@ -31,5 +31,4 @@ func OrmEngine(cfg *Config) (*Orm, error) {
 	orm.Engine = engine
 	DbEngine = orm
 	return DbEngine, nil
-
 }

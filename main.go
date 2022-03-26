@@ -27,6 +27,7 @@ func main() {
 }
 func userRouter(router *gin.Engine) {
 	userGroup := router.Group("/user")
+	new(controller.UserRegisterController).UserRegisterController(userGroup)
 	new(controller.UserLoginController).UserLoginController(userGroup)
 	new(controller.UserInfoController).UserInfoController(userGroup)
 }
