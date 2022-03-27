@@ -19,8 +19,12 @@ func (userInfoController *UserInfoController) UserInfoController(context *gin.Ro
 func (userInfoController *UserInfoController) userInfoPost(context *gin.Context) {
 	var userInfoService service.UserInfoService
 	result, err := userInfoService.UserInfoServicePost(context)
-	if err != nil || result == 0 {
+	if result == 0 {
 		logger.Error("插入数据失败", err)
+	} else if result == -1 {
+		context.JSON(http.StatusOK, gin.H{
+			"message": "用户名已存在",
+		})
 	} else {
 		context.JSON(http.StatusOK, gin.H{
 			"message": "userInfo数据插入成功",
@@ -48,6 +52,8 @@ func whetherActivateUserInfoMiddleWare() gin.HandlerFunc {
 			context.JSON(http.StatusOK, gin.H{
 				"message": "请先登入才可以访问哦",
 			})
+			//abort（）顾名思义就是终止的意思，也就是说执行该函数，会终止后面所有的该请求下的函数。
+			context.Abort()
 		}
 	}
 }

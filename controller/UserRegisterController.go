@@ -20,6 +20,9 @@ func (userRegister *UserRegisterController) UserRegisterInstance(context *gin.Co
 	result, err := userRegisterService.UserRegisterService(context)
 	if err != nil || result == 0 {
 		logger.Error("插入数据失败", err)
+		context.JSON(http.StatusOK, gin.H{
+			"message": "用户账号已被使用",
+		})
 	} else {
 		context.JSON(http.StatusOK, gin.H{
 			"message": "注册成功",

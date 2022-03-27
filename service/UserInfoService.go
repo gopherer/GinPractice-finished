@@ -1,10 +1,12 @@
 package service
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/wonderivan/logger"
 	"goWeb/dataAccess"
 	"goWeb/model"
+	"goWeb/tools"
 	"net/http"
 )
 
@@ -24,7 +26,13 @@ func (userInfoService *UserInfoService) UserInfoServicePost(context *gin.Context
 		context.JSON(http.StatusOK, gin.H{
 			"message": "输入数据有误请重新输入",
 		})
-		return 0, err
+		return 0, errors.New("输入数据有误请重新输入")
+	}
+	result := tools.UserJsonLen(userInfo)
+	if !result {
+		context.JSON(http.StatusOK, gin.H{
+			"message": "昵称或个人介绍过长",
+		})
 	}
 	return userInfoDao.UpdateUserInfo(&userInfo)
 }

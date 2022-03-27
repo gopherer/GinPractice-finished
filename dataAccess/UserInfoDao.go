@@ -25,7 +25,11 @@ func (userInfoDao *UserInfoDao) GetUserInfo(id int64, userInfo *model.UserInfo) 
 }
 func (userInfoDao *UserInfoDao) UpdateUserInfo(userInfo *model.UserInfo) (int64, error) {
 	userInfoDao.engine = tools.DbEngine
-	result, err := userInfoDao.engine.Where("id=?", userInfo.Id).Update(userInfo)
+	has, _ := userInfoDao.engine.Table("user_info").Where("user_name = ?", userInfo.UserName).Exist()
+	if has {
+		return -1, nil
+	}
+	result, err := userInfoDao.engine.Where("id = ?", userInfo.Id).Update(userInfo)
 	if err != nil {
 		logger.Error("userInfo数据添加到数据库失败", err)
 		return result, err
