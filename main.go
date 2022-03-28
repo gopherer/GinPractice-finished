@@ -14,13 +14,14 @@ func main() {
 		logger.Error("tools.ParseConfig 调用失败", err)
 		os.Exit(1)
 	}
-	web := gin.Default()
+	engine := gin.Default()
+	engine.LoadHTMLGlob("Html/user/*")
 	_, err = tools.OrmEngine(cfg)
 	if err != nil {
 		logger.Error("获取数据库实例失败", err)
 	}
-	userRouter(web)
-	err = web.Run(cfg.WebHost + ":" + cfg.WebPort)
+	userRouter(engine)
+	err = engine.Run(cfg.WebHost + ":" + cfg.WebPort)
 	if err != nil {
 		logger.Crit("web.Run 调用失败", err)
 	}

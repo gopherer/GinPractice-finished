@@ -24,8 +24,6 @@ func (userRegister *UserRegisterController) UserRegisterInstance(context *gin.Co
 			"message": "用户账号已被使用",
 		})
 	} else {
-		context.JSON(http.StatusOK, gin.H{
-			"message": "注册成功",
-		})
+		context.HTML(http.StatusOK, "user-register-success.html", gin.H{})
 	}
 }

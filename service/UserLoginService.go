@@ -15,7 +15,8 @@ type UserLoginService struct {
 
 func (userLoginService *UserLoginService) UserLoginService(context *gin.Context) error {
 	var userLogin model.UserLogin
-	err := context.BindJSON(&userLogin)
+	err := context.Bind(&userLogin) //基本上兼容所有文本
+	//err := context.BindJSON(&userLogin)
 	if err != nil {
 		logger.Error("用户数据格式不匹配", err)
 		return err

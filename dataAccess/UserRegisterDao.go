@@ -12,7 +12,7 @@ type UserRegisterDao struct {
 
 func (userRegisterDao *UserRegisterDao) GetUserRegisterID(userRegister *model.UserRegister) {
 	userRegisterDao.engine = tools.DbEngine
-	_, err := userRegisterDao.engine.Where("user_account", userRegister.UserAccount).Get(userRegister)
+	_, err := userRegisterDao.engine.Where("user_account = ? and user_pass_word = ?", userRegister.UserAccount, userRegister.UserPassWord).Get(userRegister)
 	if err != nil {
 		logger.Error("GetUserRegisterID 失败", err)
 	}

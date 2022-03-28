@@ -2,34 +2,26 @@ package main
 
 import (
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/xorm"
+	"github.com/gin-gonic/gin"
+	"log"
 )
 
-type User struct {
-	UserId   int64  `xorm:"pk autoincr"`
-	UserName string `xorm:"varchar(255)"`
-}
-type SmsCode struct {
-	Id         int64  `xorm:"pk autoincr" json:"id"`
-	Phone      string `xorm:"varchar(11)" json:"phone"`
-	BizId      string `xorm:"varchar(30)" json:"biz_id"`
-	Code       string `xorm:"varchar(6)" json:"code"`
-	CreateTime int64  `xorm:"bigint" json:"create_time"`
-}
-type UU struct {
-	Id           int64  `xorm:"pk autoincr" json:"id" `
-	UserAccount  int64  `xorm:"bigint" json:"user_account"`
-	UserPassWord string `xorm:"varchar(20)" json:"user_pass_word" binding:"required,min=6,max=20"`
-	UserName     string `xorm:"varchar(40)" json:"user_name" binding:"required,max=40"`
-	UserBio      string `xorm:"varchar(255)" json:"user_bio"`
+type People struct {
+	Name string `form:"name" json:"name"`
 }
 
 func main() {
-	conStr := "root:root@tcp(127.0.0.1:3306)/goWeb?charset="
-	engine, err := xorm.NewEngine("mysql", conStr)
-	fmt.Println(engine, err)
-	//engine.SetMapper(core.SnakeMapper{})
-	_ = engine.Sync2(new(SmsCode), new(UU))
-	fmt.Println(1111111111)
+	engine := gin.Default()
+	var p People
+	engine.POST("/ping", func(context *gin.Context) {
+		fmt.Println(context.FullPath())
+		context.Bind(&p)
+		fmt.Println(context.ContentType())
+		context.String(200, "hello")
+		fmt.Println(p)
+	})
+
+	if err := engine.Run(); err != nil {
+		log.Fatal(err)
+	} // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

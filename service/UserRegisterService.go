@@ -18,9 +18,13 @@ var userRegister model.UserRegister
 
 func (userRegisterService *UserRegisterService) UserRegisterService(context *gin.Context) (int64, error) {
 	userRegister.Id = tools.GetUserId()
-	err := context.BindJSON(&userRegister)
+	err := context.Bind(&userRegister)
+	//err := context.BindJSON(&userRegister)
 	if err != nil {
 		logger.Error("userRegister BindJson 失败", err)
+		context.JSON(http.StatusOK, gin.H{
+			"message": "无法接受前端传来的数据",
+		})
 		return 0, err
 	}
 	result := tools.UserJsonLen(userRegister)

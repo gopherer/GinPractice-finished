@@ -20,7 +20,8 @@ func (userInfoService *UserInfoService) UserInfoServicePost(context *gin.Context
 	userRegisterDao := dataAccess.UserRegisterDao{}
 	userRegisterDao.GetUserRegisterID(&userRegister)
 	userInfo.Id = userRegister.Id
-	err := context.BindJSON(&userInfo)
+	//err := context.BindJSON(&userInfo)
+	err := context.Bind(&userInfo)
 	if err != nil {
 		logger.Error("BindJSON 用户绑定失败", err)
 		context.JSON(http.StatusOK, gin.H{

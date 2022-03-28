@@ -14,6 +14,8 @@ type UserInfoController struct {
 func (userInfoController *UserInfoController) UserInfoController(context *gin.RouterGroup) {
 	context.POST("/info", whetherActivateUserInfoMiddleWare(), userInfoController.userInfoPost)
 	context.GET("/info", whetherActivateUserInfoMiddleWare(), userInfoController.userInfoGet)
+	context.GET("/set-info", whetherActivateUserInfoMiddleWare(), userInfoController.redirectSetUserInfo)
+
 }
 
 func (userInfoController *UserInfoController) userInfoPost(context *gin.Context) {
@@ -26,9 +28,7 @@ func (userInfoController *UserInfoController) userInfoPost(context *gin.Context)
 			"message": "用户名已存在",
 		})
 	} else {
-		context.JSON(http.StatusOK, gin.H{
-			"message": "userInfo数据插入成功",
-		})
+		context.HTML(http.StatusOK, "set-user-info-after-get.html", gin.H{})
 	}
 }
 func (userInfoController *UserInfoController) userInfoGet(context *gin.Context) {
@@ -39,8 +39,15 @@ func (userInfoController *UserInfoController) userInfoGet(context *gin.Context) 
 	if err != nil || result == false {
 		logger.Error("获取数据失败", err)
 	} else {
-		context.JSON(http.StatusOK, &userInfo)
+		context.HTML(http.StatusOK, "get-user-info.html", gin.H{
+			"userName": userInfo.UserName,
+			"userBio":  userInfo.UserBio,
+		})
 	}
+}
+
+func (userInfoController *UserInfoController) redirectSetUserInfo(context *gin.Context) {
+	context.HTML(http.StatusOK, "set-user-info.html", gin.H{})
 }
 
 //中间件
