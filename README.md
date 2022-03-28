@@ -1,6 +1,6 @@
 # GinProjectInstance-unfinished
 
-[image](https://github.com/gopherer/GinProjectInstance-unfinished/raw/main/readmePhoto/structure-chart.png)
+![image](https://github.com/gopherer/GinProjectInstance-unfinished/raw/main/readmePhoto/structure-chart.png)
 
 须知：1、将用户注册数据插入数据库表user_Register同时会在user_info表中将新建一条数据把id置为用户注册时的id号,以此关联二者 UserName 
 需要设置默认值 以确保主键不会冲突
