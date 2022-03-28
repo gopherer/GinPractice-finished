@@ -10,7 +10,6 @@ import (
 type UserRegisterController struct {
 }
 
-//在使用postman测试时：用户登录和注册可共用一个Controller 目前Register等价于register
 func (userRegister *UserRegisterController) UserRegisterController(context *gin.RouterGroup) {
 	context.POST("/register", userRegister.UserRegisterInstance)
 }

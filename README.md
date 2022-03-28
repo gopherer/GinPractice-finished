@@ -1,9 +1,23 @@
 # GinProjectInstance-unfinished
-想到是写啥，想到哪写哪，仅仅只是个为写项目中发现问题，解决问题，学习问题
 
-用户register无须在login 直接可操作userInfo
+[image](https://github.com/gopherer/GinProjectInstance-unfinished/raw/main/readmePhoto/structure-chart.png)
+
+须知：1、将用户注册数据插入数据库表user_Register同时会在user_info表中将新建一条数据把id置为用户注册时的id号,以此关联二者 UserName 
+需要设置默认值 以确保主键不会冲突
+
+2、用户register无须在login 直接可操作userInfo
 刚开写时没区分login和register, userInfo的功能都依托与register 为避免重写 用户采用login登录后 将直接视为register 操作userInfo
-虽然login可以开是另类的register  但还是最好区别      
+虽然login可以开是另类的register  但还是最好区别   
+   
+3、//Go系列：结构体标签  https://juejin.cn/post/7005465902804123679#heading-11
+                        https://www.cnblogs.com/chnmig/p/11382390.html
+  
+  //binding tag 可用 但不好 最好专门写个tool函数处理前端输入的数据
+  //使用匿名字段 在结构体映射为数据表时无法得到实际效果
+  //form tag 可接收html form表单 application/x-www-form-urlencoded的类容 可以以接受json文本的内容
+  //json tag 只可以接收json的文本内容
+
+遇到的有意思的问题：
 
 问题：struct结构体无法映射为数据库表  报错点err = engine.Sync2(new(model.UserLogin))
 

@@ -10,7 +10,7 @@ import (
 type UserLoginController struct {
 }
 
-//在使用postman测试时：用户登录和注册可共用一个Controller 目前login等价于register
+//在访问info是，login将转换位register 直接使用register的一些类对info的操作
 func (userLogin *UserLoginController) UserLoginController(context *gin.RouterGroup) {
 	context.POST("/login", userLogin.userLoginController)
 }
