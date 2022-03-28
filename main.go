@@ -23,7 +23,7 @@ func main() {
 	userRouter(engine)
 	err = engine.Run(cfg.WebHost + ":" + cfg.WebPort)
 	if err != nil {
-		logger.Crit("web.Run 调用失败", err)
+		logger.Crit("engine.Run 调用失败", err)
 	}
 }
 func userRouter(router *gin.Engine) {
