@@ -19,11 +19,15 @@ func main() {
 	_, err = tools.OrmEngine(cfg)
 	if err != nil {
 		logger.Error("获取数据库实例失败", err)
+		os.Exit(1)
+	
 	}
 	userRouter(engine)
 	err = engine.Run(cfg.WebHost + ":" + cfg.WebPort)
 	if err != nil {
 		logger.Crit("engine.Run 调用失败", err)
+		os.Exit(1)
+
 	}
 }
 func userRouter(router *gin.Engine) {
