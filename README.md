@@ -1,8 +1,10 @@
-# GinProjectInstance-unfinished
+# GinPractice-finished
 
 ![image](https://github.com/gopherer/GinProjectInstance-unfinished/raw/main/readmePhoto/structure-chart.png)
 
-须知：1、将用户注册数据插入数据库表user_Register同时会在user_info表中将新建一条数据把id置为用户注册时的id号,以此关联二者 UserName 
+# 须知：
+
+1、将用户注册数据插入数据库表user_Register同时会在user_info表中将新建一条数据把id置为用户注册时的id号,以此关联二者 UserName 
 需要设置默认值 以确保主键不会冲突
 
 2、用户register无须在login 直接可操作userInfo
@@ -23,7 +25,7 @@
 
   //json tag 只可以接收json的文本内容
 
-遇到的有意思的问题：
+# 遇到的有意思的问题：
 
 问题：struct结构体无法映射为数据库表  报错点err = engine.Sync2(new(model.UserLogin))
 
