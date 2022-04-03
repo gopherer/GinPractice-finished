@@ -25,6 +25,8 @@ func (userRegister *UserRegisterController) postUserRegister(context *gin.Contex
 		})
 	} else {
 		context.HTML(http.StatusOK, "user-register-success.html", gin.H{})
+		
+	}
 	
 }
 func (userRegister *UserRegisterController) getUserRegister(context *gin.Context) {
