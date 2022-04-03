@@ -2,7 +2,7 @@
   "Web_name": "goWeb",
   "Web_mode": "debug",
   "Web_host": "localhost",
-  "Web_port": "8080",
+  "Web_port": "80",
   "database": {
     "driver": "mysql",
     "user": "root",
