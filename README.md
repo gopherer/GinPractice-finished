@@ -43,4 +43,26 @@
 
 措施：发送的json数据的key值和结构体中tag标签--json定义是数据保持一致
 
+# 使用云ide(Lightly)运行项目   可能出现的相关问题
 
+1、内网穿透工具：花生壳
+
+2、mysql远程连接权限问题：
+
+mysql远程连接权限grant all privileges on *.* to ‘root‘@‘%‘ identified by ‘123456‘ with grant optio语句报错
+
+这条语句适用于MySQL8.0之前的
+
+by 后面接的是root用户的密码
+
+而MySQL8.0及之后的，设置远程连接权限要用下面的语句才可以
+
+create user root@'%' identified by '123456';
+ 
+grant all privileges on *.* to root@'%' with grant option;
+
+flush privileges;
+
+3、Lightly中运行程序后需在 .com/ ?token=      /? 之间添加上路由 
+
+例如 .com/user/login?token=
