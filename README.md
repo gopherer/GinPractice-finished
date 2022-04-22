@@ -66,3 +66,5 @@ flush privileges;
 3、Lightly中运行程序后需在 .com/ ?token=      /? 之间添加上路由 
 
 例如 .com/user/login?token=
+
+4、需修改 HTML文件中 form action="http://localhost:80/user/xxxxx"  为 lightly IDE 所给予的网页（类似与问题3）
